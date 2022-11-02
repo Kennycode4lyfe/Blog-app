@@ -44,22 +44,22 @@ This is an api for a blog app
 | last_name  | string    | required    |
 | email      | string    | required    |
 | password   | string    | required    |
-| user_type  | string    | required    |
+
 
 ### blog
 
 | field        | data_type            | constraints                |
 | ------------ | -------------------- | -------------------------- |
-| id           | string               | required                   |
-| title        | string               | required                   |
+| id           | string               | optional                   |
+| title        | string               | required , unique          |
 | author       | ObjectID ref:"users" | optional                   |
-| state        | string               | required,default:"draft"   |
-| read_count   | number               | required, default:0        |
-| reading_time | string               | required                   |
-| tags         | array                | required                   |
+| state        | string               | optional,default:"draft"   |
+| read_count   | number               | optional, default:0        |
+| reading_time | string               | optional                   |
+| tags         | array                | optional                   |
 | body         | string               | required                   |
 | timestamp    | date                 | optional, default:Date.now |
-|  |
+| Description  | string               | optional
 
 ## APIs
 
