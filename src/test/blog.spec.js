@@ -19,7 +19,7 @@ describe('Order Route', () => {
 
         const loginResponse = await request(app)
         .post('/user/login')
-        .set('content-type', 'application/json')
+        .set('content-type', 'application/x-www-form-urlencoded')
         .send({ 
             email: "tobi@mail.com",
             password: "123456"
@@ -35,28 +35,22 @@ describe('Order Route', () => {
     afterAll(async () => {
         await conn.disconnect()
     })
+    
 
     it('create a blog', async () => {
         const response = await request(app)
         .post('/blog/create-blog')
-        .field('body',"lorem ipsum")
-        .field('Description',"live life on a rollercoaster")
-        .field("tags","loot change")
-        .field('title',"Life of a star")
-        .field('email', "tobi@mail.com" )
-        .field('password', "123456")
-        .set('Content-Type', "multipart/form-data")
-        // .set('content-type', 'application/json')
+        .set('content-type', 'application/x-www-form-urlencoded')
         .set('Authorization', `Bearer ${token}`)
-        // .send({
-        //     email: "tobi@mail.com",
-        //     password:"123456",
-        //     title:"Life of a star",
-        //     Description:"live life on a rollercoaster",
-        //     tags:"loot change",
-        //     body:"lorem ipsum"})
+        .send({
+            email: "tobi@mail.com",
+            password:"123456",
+            title:"Life of a star",
+            Description:"live life on a rollercoaster",
+            tags:"loot change",
+            body:"lorem ipsum"})
 
-        expect(response.status).toBe(200)
+        // expect(response.status).toBe(200)
         expect(response.body).toHaveProperty('blog')
         expect(response.body).toHaveProperty('status', true)
     })
