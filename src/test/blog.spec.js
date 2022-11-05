@@ -9,7 +9,7 @@ describe('Order Route', () => {
     let conn;
     let token;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
         conn = await connect()
 
         await userModel.create({  password: "123456",
