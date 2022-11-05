@@ -92,16 +92,48 @@ describe('Order Route', () => {
            });
  
          const response = await request(app)
-         .put('/blog/edit-blog/Life and works of mozart')
+         .put('/blog/user-blogs')
         //  .set('Accept', "application/x-www-form-urlencoded")
          .set('Content-Type', 'application/json')
          .set('Authorization', `Bearer ${token}`)
          .send({email:"tobi@mail.com",
          Description:'Lopin over anything'})
     
-        //   .expect('Content-Type', /application\/json/)
+        
         //  expect(response.status).toBe(200)
          expect(response.body).toHaveProperty('message')
          
      })
+
+it('should return user blogs', async () => {
+        const user= await userModel.find({
+         email: "tobi@mail.com"});
+ 
+         await blogModel.create({
+             title: "Life and works of mozart",
+             Description: "Songs in a rhythm",
+             state: "published",
+             reading_time: "3minutes",
+             tags: ["loot", "change"],
+             body: "Never compromise",
+             author: user._id
+           });
+ 
+         const response = await request(app)
+         .get('/blog/edit-blog/Life and works of mozart')
+        .set('Accept', "application/x-www-form-urlencoded")
+        .set('Content-Type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        .query({secret_token:'token',
+                state:'published'})
+        .send({email:"tobi@mail.com",
+         Description:'Lopin over anything'})
+    
+        
+         expect(response.status).toBe(200)
+         expect(response.body).toHaveProperty('userBlogs')
+         
+     })
+
+
 });
