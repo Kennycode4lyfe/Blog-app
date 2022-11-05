@@ -41,7 +41,9 @@ describe('Order Route', () => {
         const response = await request(app)
         .post('/blog/create-blog')
         .set('content-type', 'application/x-www-form-urlencoded')
-        .set('Authorization', `Bearer ${token}`)
+        //.set('Authorization', `Bearer ${token}`)
+       .query({secret_token:token,
+                state:'published'})
         .send({
             email: "tobi@mail.com",
             password:"123456",
@@ -70,7 +72,9 @@ describe('Order Route', () => {
 
         const response = await request(app)
         .put('/blog/edit-blog/Life and works of mozart')
-        .set('Authorization', `Bearer ${token}`)
+        //.set('Authorization', `Bearer ${token}`)
+        .query({secret_token:token,
+                state:'published'})
         .send('Description=Lopin over anything')
 
         expect(response.status).toBe(200)
@@ -95,7 +99,9 @@ describe('Order Route', () => {
          .put('/blog/user-blogs')
         //  .set('Accept', "application/x-www-form-urlencoded")
          .set('Content-Type', 'application/json')
-         .set('Authorization', `Bearer ${token}`)
+         //.set('Authorization', `Bearer ${token}`)
+         .query({secret_token:token,
+                state:'published'})
          .send({email:"tobi@mail.com",
          Description:'Lopin over anything'})
     
@@ -123,8 +129,8 @@ it('should return user blogs', async () => {
          .get('/blog/edit-blog/Life and works of mozart')
         .set('Accept', "application/x-www-form-urlencoded")
         .set('Content-Type', 'application/json')
-        .set('Authorization', `Bearer ${token}`)
-        .query({secret_token:'token',
+       // .set('Authorization', `Bearer ${token}`)
+        .query({secret_token:token,
                 state:'published'})
         .send({email:"tobi@mail.com",
          Description:'Lopin over anything'})
@@ -134,6 +140,31 @@ it('should return user blogs', async () => {
          expect(response.body).toHaveProperty('userBlogs')
          
      })
-
+it('should publish a blog', async () => {
+        const user= await userModel.find({
+         email: "tobi@mail.com"});
+ 
+         await blogModel.create({
+             title: "Life and works of mozart",
+             Description: "Songs in a rhythm",
+             state: "draft",
+             reading_time: "3minutes",
+             tags: ["loot", "change"],
+             body: "Never compromise",
+             author: user._id
+           });
+ 
+         const response = await request(app)
+         .put('/blog/publish-blog/Life and works of mozart')
+         .set('Accept', "application/x-www-form-urlencoded")
+         .set('Authorization', `Bearer ${token}`)
+         .send({email:"tobi@mail.com",
+         Description:'Lopin over anything'})
+    
+        
+         expect(response.status).toBe(200)
+         expect(response.body).toHaveProperty('updatedBlog')
+         
+     })
 
 });
