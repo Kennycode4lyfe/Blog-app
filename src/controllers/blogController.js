@@ -1,7 +1,6 @@
 const blogModel = require("../models/blogModel");
 const userModel = require("../models/userModel");
 
-
 exports.getPublishedBlogs = async (req, res) => {
   const blogQuery = req.query;
 
@@ -21,33 +20,30 @@ exports.getPublishedBlogs = async (req, res) => {
 
   if (author) {
     const authorName = author.split(" ");
-    console.log(authorName);
+
     let [first_name, last_name] = authorName;
     const authorData = await userModel.findOne({ first_name });
     const authorId = authorData._id;
-    
+
     findQuery.author = authorId;
   }
 
   if (tags) {
-    const seperateTags = tags.split(" ");
-    findQuery.tags = seperateTags;
+    findQuery.tags = { $in: seperateTags };
   }
   const SortQuery = {};
-  if(order_by){
- 
+  if (order_by) {
+    const sortAttributes = order_by.split(",");
 
-  const sortAttributes = order_by.split(",");
-
-  for (const attribute of sortAttributes) {
-    if (order === "asc" && order_by) {
-      SortQuery[attribute] = 1;
-    }
-    if (order === "desc" && order_by) {
-      SortQuery[attribute] = -1;
+    for (const attribute of sortAttributes) {
+      if (order === "asc" && order_by) {
+        SortQuery[attribute] = 1;
+      }
+      if (order === "desc" && order_by) {
+        SortQuery[attribute] = -1;
+      }
     }
   }
-}
 
   const blogs = await blogModel.find(findQuery).sort(SortQuery).limit(per_page);
   return res.json({ status: true, blogs });
@@ -56,12 +52,7 @@ exports.getPublishedBlogs = async (req, res) => {
 exports.getPublishedBlog = async (req, res) => {
   const blogQuery = req.query;
 
-  const {
-    state = "published",
-    title,
-    author,
-    tags
-  } = blogQuery;
+  const { state = "published", title, author, tags } = blogQuery;
 
   findQuery = {};
   if (state) {
@@ -72,26 +63,31 @@ exports.getPublishedBlog = async (req, res) => {
   }
 
   if (state && author) {
-    findQuery.author = author;
+    const authorName = author.split(" ");
+
+    let [first_name, last_name] = authorName;
+    const authorData = await userModel.findOne({ first_name });
+    const authorId = authorData._id;
+
+    findQuery.author = authorId;
   }
 
   if (state && tags) {
-    findQuery.tags = tags;
+    const seperateTags = tags.split(" ");
+
+    findQuery.tags = { $in: seperateTags };
   }
 
- 
-
-  const blogs = await blogModel
+  const blog = await blogModel
     .findOneAndUpdate(findQuery, { $inc: { read_count: 1 } })
     .populate({ path: "author", select: "first_name last_name" });
 
-  return res.json({ status: true, blogs });
+  return res.json({ status: true, blog });
 };
 
 exports.createBlog = async (req, res) => {
   const blogContents = req.body;
-  console.log(blogContents)
-  console.log(typeof(blogContents))
+
   const user = await userModel.findOne({ email: blogContents.email });
 
   const readingTime = function () {
@@ -103,7 +99,6 @@ exports.createBlog = async (req, res) => {
   const tags = blogContents.tags;
   const tagsArray = function (tags) {
     let blogTag = blogContents.tags.split(" ");
-    console.log(blogTag);
 
     return blogTag;
   };
@@ -112,7 +107,7 @@ exports.createBlog = async (req, res) => {
   blogContents.reading_time = readingTime();
   blogContents.author = user._id;
   blogContents.state = "draft";
-  console.log(blogContents)
+
   const blog = await blogModel.create(blogContents);
 
   return res.json({ status: true, blog });
@@ -142,10 +137,12 @@ exports.editBlog = async (req, res) => {
   const userBlog = await blogModel.findOne({ title: titleParam });
   if (user._id.equals(userBlog.author)) {
     const updatedBlog = await blogModel
-      .findOneAndUpdate({ title: titleParam }, expectedUpdate)
+      .findOneAndUpdate({ title: titleParam }, expectedUpdate, {
+        returnOriginal: false,
+      })
       .populate({ path: "author", select: "first_name last_name" });
 
-    return res.json({ updatedBlog });
+    return res.json({ updatedBlog, status: true });
   } else {
     return res.json({ message: "You cannot edit this blog" });
   }
@@ -158,7 +155,7 @@ exports.deleteBlog = async (req, res) => {
   const userBlog = await blogModel.findOne({ title: titleParam });
   if (user._id.equals(userBlog.author)) {
     const updatedBlog = await blogModel.findOneAndDelete({ title: titleParam });
-    return res.json({message:"Blog sucessfully deleted"});
+    return res.json({ message: "Blog successfully deleted" });
   } else {
     return res.json({ message: "You cannot delete this blog" });
   }
@@ -169,16 +166,14 @@ exports.getUserBlogs = async (req, res) => {
   const blogQuery = req.query;
   const { state } = blogQuery;
   findQuery = {};
-  if(state){
-  const user = await userModel.findOne({ email });
-  const userBlogs = await blogModel.find({ author: user._id },findQuery);
-  console.log(userBlogs)
-  return res.json({ userBlogs});}
-  else{
+  if (state) {
+    const user = await userModel.findOne({ email });
+    const userBlogs = await blogModel.find({ author: user._id }, findQuery);
+
+    return res.json({ userBlogs });
+  } else {
     const user = await userModel.findOne({ email });
     const userBlogs = await blogModel.find({ author: user._id });
-    console.log(userBlogs)
-    return res.json({ userBlogs})
+    return res.json({ userBlogs });
   }
-
 };

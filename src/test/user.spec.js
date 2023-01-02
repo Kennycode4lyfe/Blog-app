@@ -20,7 +20,7 @@ describe("Auth: Signup", () => {
 
   it("should signup a user", async () => {
     const response = await request(app)
-      .post("/user/signup")
+      .post("/user/sign-up")
       .set("content-type", "application/x-www-form-urlencoded")
       .send({
         password: "Password123",

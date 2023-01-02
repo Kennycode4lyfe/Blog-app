@@ -10,10 +10,10 @@ require('./middleware/authStrategy')
 require('dotenv').config()
 
 
-app.use(express.json())
 
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json())
+app.use(express.json())
 app.get('/home',(req,res)=>{
     return res.json({message:"welcome to altblogApp"})
     })
@@ -29,4 +29,4 @@ app.use('*',(req,res)=>{
 return res.status(404).json({message:"invalid request"})
 })
 
-module.exports = app;
+module.exports = app

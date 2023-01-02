@@ -42,7 +42,7 @@ describe("home", () => {
       .set("content-type", "application/json")
       .send({ title: "Life of a star" });
     expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty("blogs");
+    expect(response.body).toHaveProperty("blog");
   });
 
   it("should return all published blogs", async () => {
