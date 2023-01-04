@@ -38,9 +38,9 @@ describe("home", () => {
     });
 
     const response = await request(app)
-      .get("/a-published-blog")
+      .get("/blogs/search")
       .set("content-type", "application/json")
-      .send({ title: "Life of a star" });
+      .query({ title: "Life of a star" });
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("blog");
   });
@@ -65,9 +65,9 @@ describe("home", () => {
     });
 
     const response = await request(app)
-      .get("/all-published-blogs")
+      .get("/blogs")
       .set("content-type", "application/json")
-      .send({ title: ["loot", "change"], order_by: "reading_time,timestamp" });
+      .query({ title: ["loot", "change"], order_by: "reading_time,timestamp" });
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("blogs");
   });

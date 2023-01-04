@@ -124,7 +124,7 @@ Success
 
 ### Create a blog
 
-- Route: /blog/create-blog?secret-token=tegggwctf
+- Route: /blog/create?secret-token=tegggwctf
 - Method: POST
 - Body:
 
@@ -173,7 +173,7 @@ Success
 
 ### Publish a blog
 
-- Route: /blog/publish-blog/Lopin the movie 2?secret-token=tegggwctf
+- Route: /blog/publish/Lopin the movie 2?secret-token=tegggwctf
 - Method: PUT
 - Body:
 
@@ -215,7 +215,7 @@ Success
 
 ### Edit a blog
 
-- Route: /blog/edit-blog/Lopin the movie 2?secret-token=tegggwctf
+- Route: /blog/draft/Lopin the movie 2?secret-token=tegggwctf
 - Method: PUT
 - Body:
 
@@ -260,7 +260,7 @@ Success
 
 ### Delete a blog
 
--Route: /blog/delete-blog/Lopin the movie 2?secret-token=tegggwctf
+-Route: /blog/Lopin the movie 2?secret-token=tegggwctf
 
 - Method: DELETE
 - Body:
@@ -286,7 +286,7 @@ Success
 
 ### Get User Blogs
 
-- Route: /blog/user-blogs?secret-token=tegggwctf&draft=published
+- Route: /blog/user?secret-token=tegggwctf&draft=published
 - Method: GET
 - Body:
 
@@ -348,7 +348,7 @@ Success
 
 ### Get all Published Blogs
 
--Route: all-published-blogs?author=Joy Ajayi&order_by=timestamp,state
+-Route: /blogs?author=Joy Ajayi&order_by=timestamp,state
 
 - Method: GET
 - Body:
@@ -409,7 +409,7 @@ Success
 
 ### Get a Published Blog
 
--Route: a-published-blog?title=Biography of Muhammed Ali&state=published
+-Route: /blogs/search?title=Biography of Muhammed Ali&state=published
 
 - Method: GET
 - Body:

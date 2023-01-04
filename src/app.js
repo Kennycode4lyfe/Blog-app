@@ -38,8 +38,8 @@ app.get('/home',(req,res)=>{
     return res.json({message:"welcome to altblogApp"})
     })
 
-app.get('/all-published-blogs', blogController.getPublishedBlogs)
-app.get('/a-published-blog', blogController.getPublishedBlog)
+app.get('/blogs', blogController.getPublishedBlogs)
+app.get('/blogs/search', blogController.getPublishedBlog)
 
 app.use('/blog',passport.authenticate('jwt',{session:false}), blogRoute)
 

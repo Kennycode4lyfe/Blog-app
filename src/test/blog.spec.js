@@ -60,7 +60,7 @@ console.log(blog)
     });
     console.log(user);
     const response = await request(app)
-      .post("/blog/create-blog")
+      .post("/blog/create")
       .set("content-type", "application/json")
       .set("Accept", "application/json")
       .query({ "secret-token": `${token}` })
@@ -80,7 +80,7 @@ console.log(blog)
   it("should edit a blog", async () => {
 
     const response = await request(app)
-      .put("/blog/edit-blog/Longing to be found")
+      .put("/blog/draft/Longing to be found")
       .set("content-type", "application/x-www-form-urlencoded")
       
       .query({ "secret-token": `${token}` })
@@ -103,7 +103,7 @@ console.log(blog)
   it("should delete a blog", async () => {
 
     const response = await request(app)
-      .delete("/blog/delete-blog/Longing to be found")
+      .delete("/blog/Longing to be found")
       .set("Accept", "application/x-www-form-urlencoded")
       .query({ "secret-token": `${token}` })
       .send({ email: "tobi@mail.com" });
@@ -115,7 +115,7 @@ console.log(blog)
 
   it("should get user blogs", async () => {
     const response = await request(app)
-      .get("/blog/user-blogs")
+      .get("/blog/user")
       .set("Accept", "application/x-www-form-urlencoded")
       .query({ "secret-token": `${token}` })
       .send({ email: "tobi@mail.com" });
@@ -124,7 +124,7 @@ console.log(blog)
 
   it("should publish a blog", async () => {
     const response = await request(app)
-      .put("/blog/publish-blog/Longing to be found")
+      .put("/blog/publish/Longing to be found")
       .set("Accept", "application/x-www-form-urlencoded")
       .query({ "secret-token": `${token}` })
       .send({ email: "tobi@mail.com" });

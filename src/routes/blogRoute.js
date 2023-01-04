@@ -3,15 +3,15 @@ const blogController =require('../controllers/blogController')
 const blogRouter= express.Router()
 
 
-blogRouter.get('/user-blogs', blogController.getUserBlogs)
+blogRouter.get('/user', blogController.getUserBlogs)
 
-blogRouter.post('/create-blog',blogController.createBlog)
+blogRouter.post('/create',blogController.createBlog)
 
-blogRouter.put('/publish-blog/:title',blogController.publishBlog)
+blogRouter.put('/publish/:title',blogController.publishBlog)
 
-blogRouter.put('/edit-blog/:title', blogController.editBlog)
+blogRouter.put('/draft/:title', blogController.editBlog)
 
-blogRouter.delete('/delete-blog/:title', blogController.deleteBlog)
+blogRouter.delete('/:title', blogController.deleteBlog)
 
 
 
