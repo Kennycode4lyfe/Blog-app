@@ -1,5 +1,7 @@
 pipeline {
   agent any
+
+      tools{nodejs 'node-js'}
   stages {
     stage('checkout code') {
       steps {
@@ -16,6 +18,7 @@ pipeline {
     stage('enter source file directory') {
       steps {
         sh 'cd src'
+        bat 'npm install'
       }
     }
 
