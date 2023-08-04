@@ -17,7 +17,7 @@ pipeline {
       steps {
         sh '''cd src && node --version
 '''
-        sh 'npm install'
+        sh 'npm version'
       }
     }
 
