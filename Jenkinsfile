@@ -15,7 +15,7 @@ pipeline {
 
     stage('unit test') {
       steps {
-        tool(name: 'node-js', type: 'npm')
+        sh 'cd src && npm install'
       }
     }
 
