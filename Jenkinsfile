@@ -13,5 +13,11 @@ pipeline {
       }
     }
 
+    stage('unit test') {
+      steps {
+        sh 'cd src && npm i && npm run test'
+      }
+    }
+
   }
 }
