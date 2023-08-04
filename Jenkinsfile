@@ -16,7 +16,7 @@ pipeline {
     stage('enter source file directory') {
       steps {
         sh 'cd src'
-        bat 'npm install'
+        sh 'npm install'
       }
     }
 
