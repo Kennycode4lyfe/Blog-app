@@ -15,9 +15,9 @@ pipeline {
 
     stage('enter source file directory') {
       steps {
-        sh '''cd src && node --version
+        sh '''node --version
 '''
-        sh 'npm install'
+        sh 'cd src && npm install'
       }
     }
 
