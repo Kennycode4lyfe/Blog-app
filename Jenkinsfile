@@ -13,9 +13,9 @@ pipeline {
       }
     }
 
-    stage('unit test') {
+    stage('enter source file directory') {
       steps {
-        sh 'cd src && npm install'
+        sh 'cd src'
       }
     }
 
