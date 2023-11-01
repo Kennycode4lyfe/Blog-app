@@ -1,6 +1,6 @@
-# Blog App
+# Orak-Blog Api
 
-This is an api for a blog app
+This is an api for a blog web application
 
 ---
 

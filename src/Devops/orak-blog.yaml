@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orak-blog-deployment
+  labels:
+    app: orak-blog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orak-blog
+  template:
+    metadata:
+      labels:
+        app: orak-blog
+    spec:
+      containers:
+      - name: orak-blog
+        image: mongo:5.0
+        ports:
+        - containerPort: 3000
+       env:
+        - name: USER_NAME 
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: mongo-user
+       env:
+        - name: USER_PWD 
+          valueFrom:
+            secretKeyRef:
+              name: mongo-password
+              key:
+        - name: DB_URL 
+          valueFrom:
+            configMapKeyRef:
+              name: mongo-config
+              key: mongo-url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orak-blog-service
+spec:
+  type: NodePort
+  selector:
+    app: mongo
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      nodePort: 30100
