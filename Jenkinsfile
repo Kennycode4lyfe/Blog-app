@@ -14,15 +14,9 @@ pipeline {
       }
     }
 
-    stage('enter source file directory') {
+    stage('install dependencies') {
       steps {
-        sh '''sudo apt-get update
-
-
-'''
-        sh '''sudo apt-get install python3
-
-'''
+        sh 'cd src'
       }
     }
 
