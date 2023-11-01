@@ -15,9 +15,13 @@ pipeline {
 
     stage('enter source file directory') {
       steps {
-        sh '''node --version
+        sh '''sudo apt-get update
+
+
 '''
-        sh 'cd src && npm install'
+        sh '''sudo apt-get install python3
+
+'''
       }
     }
 
