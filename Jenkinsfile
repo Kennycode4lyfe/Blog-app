@@ -10,6 +10,7 @@ pipeline {
     stage('log') {
       steps {
         sh 'ls -la'
+        sh 'python --version'
       }
     }
 
