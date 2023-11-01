@@ -10,7 +10,7 @@ pipeline {
     stage('log') {
       steps {
         sh 'ls -la'
-        powershell 'python --version'
+        sh 'pwsh --version'
       }
     }
 
