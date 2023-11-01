@@ -11,7 +11,7 @@ pipeline {
       steps {
         sh 'ls -la'
         sh 'node --version'
-        sh 'python --version'
+        sh 'python3 --version'
       }
     }
 
