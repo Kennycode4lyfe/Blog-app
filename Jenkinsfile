@@ -8,9 +8,20 @@ pipeline {
     }
 
     stage('log') {
-      steps {
-        sh 'ls -la'
-        sh 'node --version'
+      parallel {
+        stage('log') {
+          steps {
+            sh 'ls -la'
+            sh 'node --version'
+          }
+        }
+
+        stage('check if python is installed') {
+          steps {
+            sh 'python --version'
+          }
+        }
+
       }
     }
 
