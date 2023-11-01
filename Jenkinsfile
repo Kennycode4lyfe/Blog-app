@@ -17,7 +17,7 @@ pipeline {
     stage('install dependencies') {
       steps {
         sh 'cd src'
-        sh 'ls && npm install'
+        sh 'cd src && npm install'
       }
     }
 
