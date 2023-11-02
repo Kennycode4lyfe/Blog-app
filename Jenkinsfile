@@ -18,6 +18,7 @@ pipeline {
         sh '''node --version
 '''
         sh 'cd src && npm install'
+        sh 'npm run test'
       }
     }
 
