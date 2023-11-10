@@ -7,12 +7,12 @@ const MONGODB_URL = process.env.MONGODB_URL;
 const connectToDb = function(){
 
 
-    // mongoose.connect(MONGODB_URL||`mongodb://admin:password@localhost:27017`); 
-    mongoose.connect(`mongodb://admin:password@0.0.0.0:27017/`,{
-      // user:'admin',
-      // pass: 'password',
-      useNewUrlParser:true
-    });
+    mongoose.connect(MONGODB_URL||`mongodb://admin:password@localhost:27017`); 
+    // mongoose.connect(`mongodb://admin:password@0.0.0.0:27017/`,{
+    //   // user:'admin',
+    //   // pass: 'password',
+    //   useNewUrlParser:true
+    // });
     
 
     mongoose.connection.on("connected", () => {
