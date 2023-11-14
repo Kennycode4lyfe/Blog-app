@@ -16,9 +16,9 @@ spec:
       - name: orak-blog-api
         image: codemunch07/orak-blog:1.2
         ports:
-        - containerPort: 3000
+        - containerPort: 4000
         env:
-        - name: MONGODB_URI
+        - name: MONGODB_URL
           valueFrom:
             secretKeyRef:
               name: mongodb-secret
@@ -33,5 +33,5 @@ spec:
     app: orak-blog-api
   ports:
   - protocol: TCP
-    port: 80
-    targetPort: 3000
+    port: 4000
+    targetPort: 4000

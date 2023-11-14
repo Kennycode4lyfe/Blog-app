@@ -1,3 +1,4 @@
 node_modules
 .env
 logs
+orak-blog-secret.yaml
