@@ -23,6 +23,11 @@ spec:
             secretKeyRef:
               name: mongodb-secret
               key: uri
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: jwt
 ---
 apiVersion: v1
 kind: Service
